@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  openldap:
+    image: osixia/openldap:latest
+    container_name: octagonopshub-openldap
+    hostname: ${HOSTNAME}
+    ports:
+      - "${LDAP_PORT}:389"
+      - "${LDAPS_PORT}:636"
+    environment:
+      - LDAP_ORGANISATION=${LDAP_ORGANISATION}
+      - LDAP_DOMAIN=${LDAP_DOMAIN}
+      - LDAP_ADMIN_PASSWORD=${LDAP_ADMIN_PASSWORD}
+      - LDAP_CONFIG_PASSWORD=${LDAP_CONFIG_PASSWORD}
+      - LDAP_READONLY_USERDN=${LDAP_READONLY_USERDN}
+      - LDAP_READONLY_USERPW=${LDAP_READONLY_USERPW}
+    volumes:
+      - /mnt/nas/databases/open-ldap/slapd.d:/etc/openldap/slapd.d
+      - /mnt/nas/databases/open-ldap/openldap-data:/var/lib/openldap/openldap-data
+      - /mnt/nas/databases/open-ldap/openldap-backups:/var/lib/openldap/openldap-backups
+    restart: unless-stopped
