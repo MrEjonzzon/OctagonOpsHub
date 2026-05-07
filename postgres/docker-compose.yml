@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: octagonopshub-postgres
+    ports:
+      - "${PG_PORT}:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - /mnt/nas/databases/postgresql/data:/var/lib/postgresql/data
+    restart: unless-stopped
